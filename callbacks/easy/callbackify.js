@@ -9,7 +9,19 @@
 
 
 function callbackify(fn) {
+    return function (...args){
+        let callback = args.pop();
 
+
+        fn(...args)
+            .then((data) => {callback(null, data)})
+            .catch((error) => {callback(error)})
+        
+    }
 }
+
+
+
+
 
 module.exports = callbackify;
